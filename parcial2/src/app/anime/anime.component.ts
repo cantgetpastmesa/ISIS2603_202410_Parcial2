@@ -1,29 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { Anime } from './anime';
-import { AnimeService } from './anime.service';
 import { dataAnime } from './dataAnime';
+import { AnimeService } from './anime.service';
 
 @Component({
   selector: 'app-anime',
   templateUrl: './anime.component.html',
-  styleUrls: ['./anime.component.css'],
+  styleUrls: ['./anime.component.css']
 })
 export class AnimeComponent implements OnInit {
-  animes: Array<Anime> = [];
 
-  constructor(private animeService: AnimeService) {}
+  constructor(private animeService: AnimeService) { }
+  animes: Array<Anime>;
 
-  getAnimeList(): Array<Anime> {
-    return dataAnime;
-  }
-
-  getAnime(): void {
-    this.animeService.getAnime().subscribe((animes) => {
+  getAnime() {
+    this.animeService.getAnime().subscribe(animes => {
       this.animes = animes;
     });
   }
-
   ngOnInit() {
-    this.animes = this.getAnimeList();
+    this.getAnime();
   }
 }

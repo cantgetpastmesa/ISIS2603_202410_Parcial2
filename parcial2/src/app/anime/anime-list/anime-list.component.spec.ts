@@ -1,28 +1,26 @@
-/* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Anime } from '../anime';
+import { AnimeService } from '../anime.service';
 
-import { AnimeListComponent } from './anime-list.component';
+@Component({
+ selector: 'app-anime-list',
+ templateUrl: './anime-list.component.html',
+ styleUrls: ['./anime-list.component.css']
+})
+export class AnimeListComponent implements OnInit {
 
-describe('AnimeListComponent', () => {
-  let component: AnimeListComponent;
-  let fixture: ComponentFixture<AnimeListComponent>;
+ animes: Array<Anime> = [];
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ AnimeListComponent ]
-    })
-    .compileComponents();
-  }));
+ constructor(private animeService: AnimeService) { }
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(AnimeListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+ getAnimes(): void {
+   this.animeService.getAnime().subscribe((animes) => {
+     this.animes = animes;
+   });
+ }
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+ ngOnInit() {
+   this.getAnimes();
+ }
+
+}
